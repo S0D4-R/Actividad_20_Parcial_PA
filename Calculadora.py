@@ -1,2 +1,8 @@
-#Start
-#entre yo (Javier)
+"""
+Implicados:
+    ~ Jorge
+    ~ Javier
+    ~ Fabritzio
+    ~ Pedro
+"""
+#parte javier documentación
