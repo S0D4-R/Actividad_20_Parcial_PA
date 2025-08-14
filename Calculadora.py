@@ -1,1 +1,8 @@
-#Start
+"""
+Implicados:
+    ~ Jorge
+    ~ Javier
+    ~ Fabritzio
+    ~ Pedro
+"""
+
