@@ -5,4 +5,4 @@ Implicados:
     ~ Fabritzio
     ~ Pedro
 """
-#parte javier documentación
+#parte javier documentació
