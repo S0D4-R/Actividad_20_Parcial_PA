@@ -1,9 +1,4 @@
-"""
-Implicados:
-    ~ Jorge
-    ~ Javier
-    ~ Fabritzio
-    ~ Pedro
-"""
-#parte javier documentaciónn
-#creacion de branch
+#definir plan de ahorro
+#definir metas
+#con ciclo ir viendo lo que el usuario ha ahorrado
+#
