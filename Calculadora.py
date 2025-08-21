@@ -48,6 +48,9 @@ class SavingPlans:
 
 
 #Menu----------------------------------------------------------------------------------------------------
+goal_compendium = {}
+save_plan =  {}
+
 key = True
 while key:
     try:
