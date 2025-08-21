@@ -4,7 +4,7 @@ Implicados:
     ~ Javier
     ~ Fabritzio
     ~ Pedro
-
+#Esqueleto
 """
 #Clase meta---------------------------------------------------------------------------------------
 class Goal:
