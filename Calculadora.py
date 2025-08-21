@@ -21,7 +21,7 @@ class Goal:
         pass
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
-class SavingPlans:
+class SavingPlan:
     def __init__(self, periodo, cantidad_periodo, deposito_realizado, suma_depositos, interes, interes_type):
         self.periodo = periodo
         self.cantidad_periodo = cantidad_periodo
@@ -48,7 +48,7 @@ class SavingPlans:
 
 
 #Menu----------------------------------------------------------------------------------------------------
-goal_compendium = {}
+goals = {}
 save_plan =  {}
 
 key = True
@@ -71,6 +71,8 @@ while key:
             case "4":
                 print("Gracias por usar el programa")
                 key = False
+            case _:
+                print('Opción inválida. Intente nuevamente.\n')
 
     except Exception as e:
         print(f"Ha ocurrido un error: {e}")
