@@ -17,15 +17,15 @@ class Goal:
     def show_goal(self):
         pass
     #porcentaje_avance
-    def porcentage_process(self):
+    def percentage_process(self):
         pass
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlans:
-    def __init__(self, periodo, cantidad_periodo, depositos_realizados, suma_depositos, interes, interes_type):
+    def __init__(self, periodo, cantidad_periodo, deposito_realizado, suma_depositos, interes, interes_type):
         self.periodo = periodo
         self.cantidad_periodo = cantidad_periodo
-        self.deposito_realizado = depositos_realizados
+        self.deposito_realizado = deposito_realizado
         self.suma_d = suma_depositos
         self.interest = interes
         self.interest_type = interes_type
@@ -34,13 +34,13 @@ class SavingPlans:
     def deposit(self):
         pass
     #total_acumulado (incluye intereses)
-    def total_acumulated(self):
+    def total_accumulated(self):
         pass
     #calcula_interés_simple
     def simple_interest_calculus(self):
         pass
     #calcula_interés_compuesto
-    def compund_interest_calculus(self):
+    def compound_interest_calculus(self):
         pass
     #evaluar_progreso
     def progress_test(self):
