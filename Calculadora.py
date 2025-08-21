@@ -6,12 +6,15 @@ Implicados:
     ~ Pedro
 #Esqueleto
 """
+from pySmartDL.utils import progress_bar
+
+
 #Clase meta---------------------------------------------------------------------------------------
 class Goal:
-    def __init__(self, name, time, initial_inv):
+    def __init__(self, name, time, final_inv):
         self.name = name
         self.time = time
-        self.money = initial_inv
+        self.money = final_inv
 
     #mostrar_meta
     def show_goal(self):
@@ -43,8 +46,16 @@ class SavingPlan:
     def compound_interest_calculus(self):
         pass
     #evaluar_progreso
-    def progress_test(self):
-        pass
+    """
+    final_investment es un atributo de la clase "Goals" entonces para hacer el cálculo
+    se necesita pasar ese atributo como parámetro.
+    Además devolví un string, pero podemos también devolver progress_percentage por si es necesario para
+    otro cálculo.
+    """
+    def progress_test(self, final_investment):
+        progress_percentage = ((self.suma_d + self.interest)/final_investment)*100
+        strink_percentage = f"{progress_percentage}%"
+        return strink_percentage
 
 
 #Menu----------------------------------------------------------------------------------------------------
