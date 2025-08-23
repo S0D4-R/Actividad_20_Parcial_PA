@@ -6,9 +6,6 @@ Implicados:
     ~ Pedro
 #Esqueleto
 """
-from pySmartDL.utils import progress_bar
-
-
 #Clase meta---------------------------------------------------------------------------------------
 class Goal:
     def __init__(self, name, time, final_inv):
@@ -25,7 +22,7 @@ class Goal:
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlan:
-    def __init__(self, periodo, cantidad_periodo, deposito_realizado, suma_depositos, interes, interes_type):
+    def __init__(self, account_number, periodo, cantidad_periodo, deposito_realizado, suma_depositos, interes, interes_type):
         self.periodo = periodo
         self.cantidad_periodo = cantidad_periodo
         self.deposito_realizado = deposito_realizado
