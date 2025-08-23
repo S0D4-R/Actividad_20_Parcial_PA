@@ -18,7 +18,7 @@ class Goal:
 
     #mostrar_meta
     def show_goal(self):
-        pass
+        return f"|Nombre: {self.name}|Tiempo: {self.time}|Dinero: {self.money}|"
     #porcentaje_avance
     def percentage_process(self):
         pass
