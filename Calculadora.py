@@ -54,8 +54,8 @@ class SavingPlan:
     """
     def progress_test(self, final_investment):
         progress_percentage = ((self.suma_d + self.interest)/final_investment)*100
-        strink_percentage = f"{progress_percentage}%"
-        return strink_percentage
+        string_percentage = f"{progress_percentage}%"
+        return string_percentage
 
 #
 #Menu----------------------------------------------------------------------------------------------------
