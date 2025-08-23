@@ -57,7 +57,7 @@ class SavingPlan:
         strink_percentage = f"{progress_percentage}%"
         return strink_percentage
 
-
+#
 #Menu----------------------------------------------------------------------------------------------------
 goals = {}
 save_plan =  {}
