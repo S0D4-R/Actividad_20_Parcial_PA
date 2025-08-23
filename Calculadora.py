@@ -76,7 +76,12 @@ while key:
             case "1":
                 pass
             case "2":
-                pass
+                if not save_plan:
+                    print("No hay cuentas registradas...")
+                else:
+                    searched_id = input("Coloque el número de cuenta: ")
+                    if searched_id in save_plan:
+                        save_plan[searched_id].deposit()
             case "3":
                 pass
             case "4":
