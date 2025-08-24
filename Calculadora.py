@@ -9,8 +9,9 @@ Implicados:
 
 #Clase meta---------------------------------------------------------------------------------------
 class Goal:
-    def __init__(self, name, time, final_inv):
+    def __init__(self, name, unit, time, final_inv):
         self.name = name
+        self.unit = unit
         self.time = time
         self.money = final_inv
 
@@ -63,10 +64,21 @@ def acc_busqueda():
         f"METAS: {metas['meta'].show_goal()}\n"
         f"PLAN DE AHORRO: {metas['plan'].show_saving_plan()}\n")
 
+def ingreso_num(mensaje, tipo='int'):
+    while True:
+        try:
+            numero = float(input(f'{mensaje}'))
+            if tipo == 'int':
+                return int(numero)
+            elif tipo == 'float':
+                return round(numero, 2)
+        except ValueError:
+            print('Debe ser un número.\n')
+
 #Menu----------------------------------------------------------------------------------------------------
 cuentas = [
     {
-        'meta': Goal("Carro", 1, 150000),
+        'meta': Goal("Carro", 1, 'año', 150000),
         'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
     }
 ]
@@ -83,7 +95,25 @@ while key:
 
         match operations:
             case "1":
-                pass
+                print("-"*15 + "NUEVA META Y PLAN DE AHORRO"+ "-"*15)
+                nombre = input('Ingrese el nombre de la meta: ')
+
+                unidades = ['años', 'meses']
+                print('Unidades: \n1. Años \n 2. Meses')
+                while True:
+                    unidad = ingreso_num('Ingrese la unidad de tiempo en la que va a ahorrar: ')
+                    if unidad == 1 or unidad == 2:
+                        unidad = unidades[unidad-1]
+                        break
+                    else:
+                        print('Número fuera de rango.\n')
+                tiempo = ingreso_num(f'Ingrese la cantidad de {unidad} en los que desea ahorrar: ')
+                cantidad = ingreso_num('Ingrese la cantidad de dinero que desea ahorrar: ', 'float')
+
+                goal = Goal(nombre, unidad, tiempo, cantidad)
+
+
+
             case "2":
                 if not cuentas:
                     print("No hay cuentas registradas...")
