@@ -104,12 +104,12 @@ def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
 
 
 #Menu----------------------------------------------------------------------------------------------------
- cuentas = [
-     {
-         'meta': Goal("Carro", "año", 1, 150000),
-         'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
-     }
- ]
+cuentas = [
+    {
+        'meta': Goal("Carro", "año", 1, 150000),
+        'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
+    }
+]
 key = True
 while key:
     try:
