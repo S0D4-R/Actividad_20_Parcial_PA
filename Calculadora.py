@@ -32,7 +32,7 @@ class SavingPlan:
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Tasa de interés: Q{self.interest*100:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
+        return f"|Periodo: {self.frecuencia.capitalize()} |Dinero Total: Q{self.saldo_total} |Tasa de interés: Q{self.interest*100:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
 
     #depositar
     def deposit(self,money_amount):
@@ -57,15 +57,18 @@ class SavingPlan:
     def progress_test(self, unidad, tiempo, final_investment):
         progress_percentage = ((self.total_accumulated(unidad, tiempo))/final_investment)*100
         if final_investment == 0:
-            return "0%"
-        return f"{progress_percentage}%"
+            progress_percentage = 0
+        return f"Progreso: {progress_percentage:.2f}% | Depositos: {len(self.depositos_realizados)}/{self.depositos_esperados} |"
 
 def acc_busqueda():
     if cuentas:
         for i, metas in enumerate(cuentas, start=1):
-            print(f'Meta y plan No. {i}\n'
-            f"METAS:\n {metas['meta'].show_goal()}\n"
-            f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n {metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
+            meta = metas['meta']
+            plan = metas['plan']
+            print(f'Cuenta No. {i}\n'
+            f"META:\n {meta.show_goal()}\n"
+            f"PLAN DE AHORRO:\n {plan.show_saving_plan()}\n"
+            f'PROGRESO:\n {plan.progress_test(meta.unit, meta.time, meta.money)}\n\n')
     else:
         print('No hay metas y planes registrados.\n')
 
@@ -221,4 +224,3 @@ while key:
 
     except Exception as e:
         print(f"Ha ocurrido un error: {e}")
-
