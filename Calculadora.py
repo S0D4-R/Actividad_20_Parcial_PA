@@ -140,9 +140,18 @@ while key:
                         break
                     else:
                         print('Número fuera de rango.\n')
-                tiempo = ingreso_num(f'Ingrese la cantidad de {unidad} en los que desea ahorrar: ')
-                cantidad = ingreso_num('Ingrese la cantidad de dinero que desea ahorrar: ', 'float')
-
+                while True:
+                    tiempo = ingreso_num(f'Ingrese la cantidad de {unidad} en los que desea ahorrar: ')
+                    if tiempo <=0:
+                        print("El tiempo debe ser mayor a 0")
+                    else:
+                        break
+                while True:
+                    cantidad = ingreso_num('Ingrese la cantidad de dinero que desea ahorrar: ', 'float')
+                    if cantidad <=0:
+                        print("La cantidad debe ser mayor a 0")
+                    else:
+                        break
                 goal = Goal(nombre, unidad, tiempo, cantidad)
 
                 #Plan de ahorro
