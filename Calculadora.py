@@ -6,8 +6,6 @@ Implicados:
     ~ Pedro
 #Esqueleto
 """
-from pySmartDL.utils import progress_bar
-
 
 #Clase meta---------------------------------------------------------------------------------------
 class Goal:
@@ -25,10 +23,10 @@ class Goal:
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlan:
-    def __init__(self, periodo, cantidad_periodo, deposito_realizado, suma_depositos, interes, interes_type):
+    def __init__(self, periodo, cantidad_periodo, suma_depositos, interes, interes_type):
         self.periodo = periodo
         self.cantidad_periodo = cantidad_periodo
-        self.deposito_realizado = deposito_realizado
+        self.depositos_realizados = []
         self.suma_d = suma_depositos
         self.interest = interes
         self.interest_type = interes_type
@@ -57,10 +55,9 @@ class SavingPlan:
         string_percentage = f"{progress_percentage}%"
         return string_percentage
 
-#
+
 #Menu----------------------------------------------------------------------------------------------------
-goals = {}
-save_plan =  {}
+cuentas = []
 
 key = True
 while key:
@@ -76,12 +73,12 @@ while key:
             case "1":
                 pass
             case "2":
-                if not save_plan:
+                if not cuentas:
                     print("No hay cuentas registradas...")
                 else:
                     searched_id = input("Coloque el número de cuenta: ")
-                    if searched_id in save_plan:
-                        save_plan[searched_id].deposit()
+                    if searched_id in cuentas:
+                        cuentas[searched_id].deposit()
             case "3":
                 pass
             case "4":
