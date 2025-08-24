@@ -86,7 +86,7 @@ while key:
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
                 for i, metas in enumerate(cuentas):
                     print(f"Metas: {i}. {metas.show_goal()}\n"
-                          f"Plan de ahorro{i}. {metas.show_saving_plan()}\n")
+                          f"Plan de ahorro: {i}. {metas.show_saving_plan()}\n")
             case "4":
                 print("Gracias por usar el programa")
                 key = False
