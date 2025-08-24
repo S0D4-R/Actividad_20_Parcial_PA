@@ -16,8 +16,7 @@ class Goal:
 
     #mostrar_meta
     def show_goal(self):
-        return f"|Nombre: {self.name}|Tiempo: {self.time} año|Dinero por acumular: {self.money}|"
-    #porcentaje_avance
+        return f"|Nombre: {self.name}|Tiempo: {self.time} año|Dinero por acumular: Q{self.money}|"
 
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
@@ -31,7 +30,7 @@ class SavingPlan:
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.periodo} |Dinero Total: {self.saldo_total} |Interés: {self.interest} |"
+        return f"|Periodo: {self.periodo} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest} |"
 
     #depositar
     def deposit(self,money_amount):
@@ -60,8 +59,9 @@ class SavingPlan:
 
 def acc_busqueda():
     for i, metas in enumerate(cuentas, start=1):
-        print(f"Metas: {i}. {metas['meta'].show_goal()}\n"
-              f"Plan de ahorro: {i}. {metas['plan'].show_saving_plan()}\n")
+        print(f'Meta y plan No. {i}\n'
+        f"METAS: {metas['meta'].show_goal()}\n"
+        f"PLAN DE AHORRO: {metas['plan'].show_saving_plan()}\n")
 
 #Menu----------------------------------------------------------------------------------------------------
 cuentas = [
