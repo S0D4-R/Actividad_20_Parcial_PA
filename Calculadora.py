@@ -54,7 +54,7 @@ class SavingPlan:
     otro cálculo.
     """
     def progress_test(self, final_investment):
-        progress_percentage = ((self.saldo_total + self.interest)/final_investment)*100
+        progress_percentage = ((self.saldo_total+(self.saldo_total * self.interest))/final_investment)*100
         string_percentage = f"{progress_percentage}%"
         return string_percentage
 
@@ -109,7 +109,8 @@ while key:
                            "1. Crear Meta y Plan de Ahorro\n"
                            "2. Hacer un Depósito\n"
                            "3. Ver Resumen de Metas y Planes\n"
-                           "4. Salir\n\n"
+                           "4. Porcentaje de meta y progreso\n"
+                           "5. Salir\n\n"
                            "Opción: ")
 
         match operations:
@@ -184,9 +185,20 @@ while key:
             case "3":
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
                 acc_busqueda()
-            case "4":
+            case "5":
                 print("Gracias por usar el programa")
                 key = False
+
+            #Progress test
+            case "4":
+                if not cuentas:
+                    print("No hay cuentas registradas...")
+                else:
+                    acc_busqueda()
+                    searched_id = int(input("Coloque el número de cuenta: "))
+                    if cuentas[searched_id - 1]:
+                        print(cuentas[searched_id - 1]['plan'].progress_test(cuentas[searched_id-1]['meta'].money))
+
             case _:
                 print('Opción inválida. Intente nuevamente.\n')
 
