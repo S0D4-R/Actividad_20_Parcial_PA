@@ -31,7 +31,7 @@ class SavingPlan:
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
+        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Tasa de interés: Q{self.interest*100:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
 
     #depositar
     def deposit(self,money_amount):
@@ -60,6 +60,8 @@ class SavingPlan:
             return self.saldo_total + (self.saldo_total * self.interest * n)
         elif self.interest_type == "compound":
             return self.saldo_total * (1 + self.interest) ** n
+        else:
+            return self.saldo_total
     #evaluar_progreso
     """
     final_investment es un atributo de la clase "Goals" entonces para hacer el cálculo
@@ -67,15 +69,17 @@ class SavingPlan:
     Además devolví un string, pero podemos también devolver progress_percentage por si es necesario para
     otro cálculo.
     """
-    def progress_test(self, final_investment):
-        progress_percentage = ((self.total_accumulated())/final_investment)*100
+    def progress_test(self, unidad, tiempo, final_investment):
+        progress_percentage = ((self.total_accumulated(unidad, tiempo))/final_investment)*100
+        if final_investment == 0:
+            return "0%"
         return f"{progress_percentage}%"
 
 def acc_busqueda():
     for i, metas in enumerate(cuentas, start=1):
         print(f'Meta y plan No. {i}\n'
-        f"METAS: {metas['meta'].show_goal()}\n"
-        f"PLAN DE AHORRO: {metas['plan'].show_saving_plan()}\n")
+        f"METAS:\n {metas['meta'].show_goal()}\n"
+        f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n{metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
 
 
 def ingreso_num(mensaje, tipo='int'):
@@ -110,12 +114,8 @@ def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
 
 
 #Menu----------------------------------------------------------------------------------------------------
-cuentas = [
-    {
-        'meta': Goal("Carro", "año", 1, 150000),
-        'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
-    }
-]
+cuentas = []
+
 key = True
 while key:
     try:
