@@ -71,6 +71,7 @@ def acc_busqueda():
         f"METAS: {metas['meta'].show_goal()}\n"
         f"PLAN DE AHORRO: {metas['plan'].show_saving_plan()}\n")
 
+
 def ingreso_num(mensaje, tipo='int'):
     while True:
         try:
