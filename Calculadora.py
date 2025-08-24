@@ -58,9 +58,17 @@ class SavingPlan:
         string_percentage = f"{progress_percentage}%"
         return string_percentage
 
-
+def acc_busqueda():
+    for i, metas in enumerate(cuentas):
+        print(f"Metas: {i}. {metas.show_goal()}\n"
+              f"Plan de ahorro: {i}. {metas.show_saving_plan()}\n")
 #Menu----------------------------------------------------------------------------------------------------
-cuentas = []
+cuentas = [
+    {
+        'meta': Goal("Carro", 1, 150000),
+        'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
+    }
+]
 
 key = True
 while key:
@@ -79,14 +87,13 @@ while key:
                 if not cuentas:
                     print("No hay cuentas registradas...")
                 else:
+                    acc_busqueda()
                     searched_id = input("Coloque el número de cuenta: ")
                     if searched_id in cuentas:
-                        cuentas[searched_id].deposit()
+                        cuentas[searched_id]['plan'].deposit()
             case "3":
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
-                for i, metas in enumerate(cuentas):
-                    print(f"Metas: {i}. {metas.show_goal()}\n"
-                          f"Plan de ahorro: {i}. {metas.show_saving_plan()}\n")
+                acc_busqueda()
             case "4":
                 print("Gracias por usar el programa")
                 key = False
