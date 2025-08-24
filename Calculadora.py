@@ -17,7 +17,7 @@ class Goal:
 
     #mostrar_meta
     def show_goal(self):
-        return f"|Nombre: {self.name}|Tiempo: {self.time} año|Dinero por acumular: Q{self.money}|"
+        return f"|Nombre: {self.name}|Tiempo: {self.time} {self.unit}|Dinero por acumular: Q{self.money}|"
 
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class SavingPlan:
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest} |"
+        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest:.2f} |"
 
     #depositar
     def deposit(self,money_amount):
@@ -39,13 +39,20 @@ class SavingPlan:
         self.saldo_total += money_amount
 
     #total_acumulado (incluye intereses)
-    def total_accumulated(self,total):
+    def total_accumulated(self,tiempo):
         capital= sum(self.depositos_realizados)
+        if self.frecuencia == "semanal":
+            n = tiempo * 52
+        elif self.frecuencia == "quincenal":
+            n = tiempo * 24
+        elif self.frecuencia == "mensual":
+            n = tiempo * 12
+        else:
+            n = tiempo
         if self.interest_type == "simple":
-            total = capital+ (capital * self.interest * self.frecuencia)
+            return capital + (capital * self.interest * n)
         elif self.interest_type == "compound":
-            total= capital * (1+ self.interest)**self.frecuencia
-        return total
+            return capital * (1 + self.interest) ** n
     #evaluar_progreso
     """
     final_investment es un atributo de la clase "Goals" entonces para hacer el cálculo
@@ -53,10 +60,10 @@ class SavingPlan:
     Además devolví un string, pero podemos también devolver progress_percentage por si es necesario para
     otro cálculo.
     """
-    def progress_test(self, final_investment):
-        progress_percentage = ((self.saldo_total + self.interest)/final_investment)*100
-        string_percentage = f"{progress_percentage}%"
-        return string_percentage
+    def progress_test(self, final_investment, tiempo):
+        total = self.total_accumulated(tiempo)
+        progress_percentage = (total / final_investment) * 100
+        return f"{round(progress_percentage, 2)}%"
 
 def acc_busqueda():
     for i, metas in enumerate(cuentas, start=1):
@@ -75,7 +82,7 @@ def ingreso_num(mensaje, tipo='int'):
         except ValueError:
             print('Debe ser un número.\n')
 
-def monto_por_deposito(unidad, tiempo):
+def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
     if unidad == "años":
         if frecuencia == "semanal":
             total_depositos = tiempo * 52
@@ -117,8 +124,12 @@ while key:
                 print("-"*15 + "NUEVA META Y PLAN DE AHORRO"+ "-"*15)
                 #Meta
                 print('META:\n')
-                nombre = input('Ingrese el nombre de la meta: ')
-
+                while True:
+                    nombre = input('Ingrese el nombre de la meta: ')
+                    if not nombre:
+                        print("El nombre no puede quedar vacio")
+                    else:
+                        break
                 unidades = ['años', 'meses']
                 print('\nUnidades: \n1. Años \n2. Meses')
                 while True:
@@ -145,11 +156,11 @@ while key:
                     else:
                         print('Número fuera de rango.\n')
 
-                monto_por_dep = monto_por_deposito(unidad, tiempo)
+                monto_por_dep = monto_por_deposito(unidad, tiempo,frecuencia, cantidad)
 
                 print('IMPORTANTE: Las tasas de interés van de 0.1% hasta 7%.')
                 while True:
-                    t_interes = ingreso_num('Ingrese la tasa de interés: ')
+                    t_interes = ingreso_num('Ingrese la tasa de interés: ',"float")
                     if 0.1 <= t_interes <= 7:
                         t_interes = t_interes / 100
                         break
@@ -177,10 +188,13 @@ while key:
                 else:
                     acc_busqueda()
                     searched_id = int(input("Coloque el número de cuenta: "))
-                    if cuentas[searched_id - 1]:
-                        amount_to_deposit = int(input("Coloque la cantidad que depositará: "))
-                        cuentas[searched_id-1]['plan'].deposit(amount_to_deposit)
-                        print(f"!Depósito exitoso! Saldo total: {cuentas[searched_id-1]["plan"].saldo_total}")
+                    if 1<= searched_id <= len(cuentas):
+                        if cuentas[searched_id - 1]:
+                            amount_to_deposit = int(input("Coloque la cantidad que depositará: "))
+                            cuentas[searched_id-1]['plan'].deposit(amount_to_deposit)
+                            print(f"!Depósito exitoso! Saldo total: {cuentas[searched_id-1]["plan"].saldo_total}")
+                    else:
+                        print("Numero de cuenta invalido")
             case "3":
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
                 acc_busqueda()
