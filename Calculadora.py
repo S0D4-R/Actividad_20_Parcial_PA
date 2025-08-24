@@ -16,27 +16,28 @@ class Goal:
 
     #mostrar_meta
     def show_goal(self):
-        return f"|Nombre: {self.name}|Tiempo: {self.time}|Dinero: {self.money}|"
+        return f"|Nombre: {self.name}|Tiempo: {self.time} año|Dinero por acumular: {self.money}|"
     #porcentaje_avance
 
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlan:
-    def __init__(self, periodo, cantidad_periodo, suma_depositos, interes, interes_type):
+    def __init__(self, periodo, cantidad_periodo, saldo_total, interes, interes_type):
         self.periodo = periodo
         self.cantidad_periodo = cantidad_periodo
         self.depositos_realizados = []
-        self.suma_d = suma_depositos
+        self.saldo_total = saldo_total
         self.interest = interes
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.periodo} |suma de deposito: {self.suma_d} |Interes: {self.interest} |"
+        return f"|Periodo: {self.periodo} |Dinero Total: {self.saldo_total} |Interés: {self.interest} |"
 
     #depositar
     def deposit(self,money_amount):
         self.depositos_realizados.append(money_amount)
-        self.suma_d += money_amount
+        self.saldo_total += money_amount
+
     #total_acumulado (incluye intereses)
     def total_accumulated(self,total):
         capital= sum(self.depositos_realizados)
@@ -58,9 +59,10 @@ class SavingPlan:
         return string_percentage
 
 def acc_busqueda():
-    for i, metas in enumerate(cuentas):
-        print(f"Metas: {i}. {metas.show_goal()}\n"
-              f"Plan de ahorro: {i}. {metas.show_saving_plan()}\n")
+    for i, metas in enumerate(cuentas, start=1):
+        print(f"Metas: {i}. {metas['meta'].show_goal()}\n"
+              f"Plan de ahorro: {i}. {metas['plan'].show_saving_plan()}\n")
+
 #Menu----------------------------------------------------------------------------------------------------
 cuentas = [
     {
@@ -87,9 +89,11 @@ while key:
                     print("No hay cuentas registradas...")
                 else:
                     acc_busqueda()
-                    searched_id = input("Coloque el número de cuenta: ")
-                    if searched_id in cuentas:
-                        cuentas[searched_id]['plan'].deposit()
+                    searched_id = int(input("Coloque el número de cuenta: "))
+                    if cuentas[searched_id - 1]:
+                        amount_to_deposit = int(input("Coloque la cantidad que depositará: "))
+                        cuentas[searched_id-1]['plan'].deposit(amount_to_deposit)
+                        print(f"!Depósito exitoso! Saldo total: {cuentas[searched_id-1]["plan"].saldo_total}")
             case "3":
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
                 acc_busqueda()
