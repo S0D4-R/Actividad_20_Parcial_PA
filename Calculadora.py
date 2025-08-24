@@ -22,8 +22,9 @@ class Goal:
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlan:
-    def __init__(self, frecuencia, cantidad_por_deposito, saldo_total, interes, interes_type):
+    def __init__(self, frecuencia, depositos_esperados, cantidad_por_deposito, saldo_total, interes, interes_type):
         self.frecuencia = frecuencia
+        self.depositos_esperados = depositos_esperados
         self.cantidad_por_deposito = cantidad_por_deposito
         self.depositos_realizados = []
         self.saldo_total = saldo_total
@@ -40,26 +41,10 @@ class SavingPlan:
 
     #total_acumulado (incluye intereses)
     def total_accumulated(self, unidad, tiempo):
-        n = 0
-        if unidad == 'años':
-            if self.frecuencia == "semanal":
-                n = tiempo * 52
-            elif self.frecuencia == "quincenal":
-                n = tiempo * 24
-            elif self.frecuencia == "mensual":
-                n = tiempo * 12
-        elif unidad == 'meses':
-            if self.frecuencia == "semanal":
-                n = tiempo * 4
-            elif self.frecuencia == "quincenal":
-                n = tiempo * 2
-            elif self.frecuencia == "mensual":
-                n = tiempo
-
         if self.interest_type == "simple":
-            return self.saldo_total + (self.saldo_total * self.interest * n)
+            return self.saldo_total + (self.saldo_total * self.interest * self.depositos_esperados)
         elif self.interest_type == "compound":
-            return self.saldo_total * (1 + self.interest) ** n
+            return self.saldo_total * (1 + self.interest) ** self.depositos_esperados
         else:
             return self.saldo_total
     #evaluar_progreso
@@ -80,7 +65,7 @@ def acc_busqueda():
         for i, metas in enumerate(cuentas, start=1):
             print(f'Meta y plan No. {i}\n'
             f"METAS:\n {metas['meta'].show_goal()}\n"
-            f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n{metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
+            f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n {metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
     else:
         print('No hay metas y planes registrados.\n')
 
@@ -96,24 +81,24 @@ def ingreso_num(mensaje, tipo='int'):
         except ValueError:
             print('Debe ser un número.\n')
 
-def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
-    total_depositos = 0
+def total_depositos(unidad, tiempo,frecuencia):
+    total = 0
     if unidad == "años":
         if frecuencia == "semanal":
-            total_depositos = tiempo * 52
+            total = tiempo * 52
         elif frecuencia == "quincenal":
-            total_depositos = tiempo * 24
+            total = tiempo * 24
         elif frecuencia == "mensual":
-            total_depositos = tiempo * 12
+            total = tiempo * 12
     elif unidad == "meses":
         if frecuencia == "semanal":
-            total_depositos = tiempo * 4
+            total = tiempo * 4
         elif frecuencia == "quincenal":
-            total_depositos = tiempo * 2
+            total = tiempo * 2
         elif frecuencia == "mensual":
-            total_depositos = tiempo
+            total = tiempo
 
-    return cantidad / total_depositos
+    return total
 
 
 #Menu----------------------------------------------------------------------------------------------------
@@ -175,7 +160,9 @@ while key:
                     else:
                         print('Número fuera de rango.\n')
 
-                monto_por_dep = monto_por_deposito(unidad, tiempo,frecuencia, cantidad)
+                depositos_esp = total_depositos(unidad, tiempo, frecuencia)
+
+                monto_por_dep = cantidad / depositos_esp
 
                 print('IMPORTANTE: Las tasas de interés van de 0.1% hasta 7%.')
                 while True:
@@ -196,7 +183,7 @@ while key:
                     else:
                         print('Número fuera de rango.\n')
 
-                plan = SavingPlan(frecuencia, monto_por_dep,0, t_interes, tipo) # Saldo total = 0, al ser saldo inicial.
+                plan = SavingPlan(frecuencia, depositos_esp, monto_por_dep,0, t_interes, tipo) # Saldo total = 0, al ser saldo inicial.
 
                 cuenta = {'meta': goal, 'plan': plan}
                 cuentas.append(cuenta)
