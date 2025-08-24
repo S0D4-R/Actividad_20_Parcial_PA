@@ -54,11 +54,9 @@ class SavingPlan:
         string_percentage = f"{progress_percentage}%"
         return string_percentage
 
-#
+def add_plans(plans):
+    return plans
 #Menu----------------------------------------------------------------------------------------------------
-goals = {}
-save_plan =  {}
-
 key = True
 while key:
     try:
@@ -73,12 +71,7 @@ while key:
             case "1":
                 pass
             case "2":
-                if not save_plan:
-                    print("No hay cuentas registradas...")
-                else:
-                    searched_id = input("Coloque el número de cuenta: ")
-                    if searched_id in save_plan:
-                        save_plan[searched_id].deposit()
+                pass
             case "3":
                 pass
             case "4":
