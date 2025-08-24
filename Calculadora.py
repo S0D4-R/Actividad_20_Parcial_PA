@@ -38,14 +38,13 @@ class SavingPlan:
         self.depositos_realizados.append(money_amount)
         self.suma_d += money_amount
     #total_acumulado (incluye intereses)
-    def total_accumulated(self):
-        pass
-    #calcula_interés_simple
-    def simple_interest_calculus(self):
-        pass
-    #calcula_interés_compuesto
-    def compound_interest_calculus(self):
-        pass
+    def total_accumulated(self,total):
+        capital= sum(self.depositos_realizados)
+        if self.interest_type == "simple":
+            total = capital+ (capital * self.interest * self.periodo)
+        elif self.interest_type == "compound":
+            total= capital * (1+ self.interest)**self.periodo
+        return total
     #evaluar_progreso
     """
     final_investment es un atributo de la clase "Goals" entonces para hacer el cálculo
