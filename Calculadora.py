@@ -60,10 +60,11 @@ class SavingPlan:
     Además devolví un string, pero podemos también devolver progress_percentage por si es necesario para
     otro cálculo.
     """
-    def progress_test(self, final_investment, tiempo):
-        total = self.total_accumulated(tiempo)
-        progress_percentage = (total / final_investment) * 100
-        return f"{round(progress_percentage, 2)}%"
+    def progress_test(self, final_investment):
+        progress_percentage = ((self.suma_d + self.interest)/final_investment)*100
+        progress_percentage = ((self.saldo_total + self.interest)/final_investment)*100
+        string_percentage = f"{progress_percentage}%"
+        return string_percentage
 
 def acc_busqueda():
     for i, metas in enumerate(cuentas, start=1):
@@ -103,13 +104,12 @@ def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
 
 
 #Menu----------------------------------------------------------------------------------------------------
-# cuentas = [
-#     {
-#         'meta': Goal("Carro", "año", 1, 150000),
-#         'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
-#     }
-# ]
-cuentas= []
+ cuentas = [
+     {
+         'meta': Goal("Carro", "año", 1, 150000),
+         'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
+     }
+ ]
 key = True
 while key:
     try:
@@ -207,7 +207,7 @@ while key:
                                 if amount_to_deposit > 0:
                                     cuentas[searched_id - 1]['plan'].deposit(amount_to_deposit)
                                     print(
-                                        f"!Depsito exitoso! Saldo total: Q{cuentas[searched_id - 1]["plan"].saldo_total}")
+                                        f"!Deposito exitoso! Saldo total: Q{cuentas[searched_id - 1]["plan"].saldo_total}")
                                 else:
                                     print("El monto debe ser mayor a 0.")
                             else:
