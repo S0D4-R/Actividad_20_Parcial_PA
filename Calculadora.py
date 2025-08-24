@@ -103,13 +103,13 @@ def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
 
 
 #Menu----------------------------------------------------------------------------------------------------
-cuentas = [
-    {
-        'meta': Goal("Carro", 1, 'año', 150000),
-        'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
-    }
-]
-
+# cuentas = [
+#     {
+#         'meta': Goal("Carro", "año", 1, 150000),
+#         'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
+#     }
+# ]
+cuentas= []
 key = True
 while key:
     try:
@@ -187,15 +187,24 @@ while key:
                 if not cuentas:
                     print("No hay cuentas registradas...")
                 else:
-                    acc_busqueda()
-                    searched_id = int(input("Coloque el número de cuenta: "))
-                    if 1<= searched_id <= len(cuentas):
-                        if cuentas[searched_id - 1]:
-                            amount_to_deposit = int(input("Coloque la cantidad que depositará: "))
-                            cuentas[searched_id-1]['plan'].deposit(amount_to_deposit)
-                            print(f"!Depósito exitoso! Saldo total: {cuentas[searched_id-1]["plan"].saldo_total}")
+                    if not cuentas:
+                        print("No hay cuentas registradas...")
                     else:
-                        print("Numero de cuenta invalido")
+                        acc_busqueda()
+                        try:
+                            searched_id = int(input("Coloque el número de cuenta: "))
+                            if 1 <= searched_id <= len(cuentas):
+                                amount_to_deposit = ingreso_num("Coloque la cantidad que depositará: ", "float")
+                                if amount_to_deposit > 0:
+                                    cuentas[searched_id - 1]['plan'].deposit(amount_to_deposit)
+                                    print(
+                                        f"!Depsito exitoso! Saldo total: Q{cuentas[searched_id - 1]["plan"].saldo_total}")
+                                else:
+                                    print("El monto debe ser mayor a 0.")
+                            else:
+                                print("Número de cuenta inválido")
+                        except ValueError:
+                            print("Debe ingresar un número válido.")
             case "3":
                 print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
                 acc_busqueda()
