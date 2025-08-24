@@ -17,7 +17,7 @@ class Goal:
 
     #mostrar_meta
     def show_goal(self):
-        return f"|Nombre: {self.name}|Tiempo: {self.time} {self.unit}|Dinero por acumular: Q{self.money}|"
+        return f"|Nombre: {self.name} |Tiempo: {self.time} {self.unit} |Dinero por acumular: Q{self.money} |"
 
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class SavingPlan:
         self.interest_type = interes_type
     #Mostrar el avance del plan de ahorro
     def show_saving_plan(self):
-        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest:.2f} |"
+        return f"|Periodo: {self.frecuencia} |Dinero Total: Q{self.saldo_total} |Interés: Q{self.interest:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
 
     #depositar
     def deposit(self,money_amount):
@@ -39,20 +39,27 @@ class SavingPlan:
         self.saldo_total += money_amount
 
     #total_acumulado (incluye intereses)
-    def total_accumulated(self,tiempo):
-        capital= sum(self.depositos_realizados)
-        if self.frecuencia == "semanal":
-            n = tiempo * 52
-        elif self.frecuencia == "quincenal":
-            n = tiempo * 24
-        elif self.frecuencia == "mensual":
-            n = tiempo * 12
-        else:
-            n = tiempo
+    def total_accumulated(self, unidad, tiempo):
+        n = 0
+        if unidad == 'años':
+            if self.frecuencia == "semanal":
+                n = tiempo * 52
+            elif self.frecuencia == "quincenal":
+                n = tiempo * 24
+            elif self.frecuencia == "mensual":
+                n = tiempo * 12
+        elif unidad == 'meses':
+            if self.frecuencia == "semanal":
+                n = tiempo * 4
+            elif self.frecuencia == "quincenal":
+                n = tiempo * 2
+            elif self.frecuencia == "mensual":
+                n = tiempo
+
         if self.interest_type == "simple":
-            return capital + (capital * self.interest * n)
+            return self.saldo_total + (self.saldo_total * self.interest * n)
         elif self.interest_type == "compound":
-            return capital * (1 + self.interest) ** n
+            return self.saldo_total * (1 + self.interest) ** n
     #evaluar_progreso
     """
     final_investment es un atributo de la clase "Goals" entonces para hacer el cálculo
@@ -61,10 +68,8 @@ class SavingPlan:
     otro cálculo.
     """
     def progress_test(self, final_investment):
-        progress_percentage = ((self.suma_d + self.interest)/final_investment)*100
-        progress_percentage = ((self.saldo_total + self.interest)/final_investment)*100
-        string_percentage = f"{progress_percentage}%"
-        return string_percentage
+        progress_percentage = ((self.total_accumulated())/final_investment)*100
+        return f"{progress_percentage}%"
 
 def acc_busqueda():
     for i, metas in enumerate(cuentas, start=1):
@@ -85,6 +90,7 @@ def ingreso_num(mensaje, tipo='int'):
             print('Debe ser un número.\n')
 
 def monto_por_deposito(unidad, tiempo,frecuencia,cantidad):
+    total_depositos = 0
     if unidad == "años":
         if frecuencia == "semanal":
             total_depositos = tiempo * 52
