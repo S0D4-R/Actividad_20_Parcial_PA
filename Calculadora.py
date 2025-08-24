@@ -76,10 +76,13 @@ class SavingPlan:
         return f"{progress_percentage}%"
 
 def acc_busqueda():
-    for i, metas in enumerate(cuentas, start=1):
-        print(f'Meta y plan No. {i}\n'
-        f"METAS:\n {metas['meta'].show_goal()}\n"
-        f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n{metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
+    if cuentas:
+        for i, metas in enumerate(cuentas, start=1):
+            print(f'Meta y plan No. {i}\n'
+            f"METAS:\n {metas['meta'].show_goal()}\n"
+            f"PLAN DE AHORRO:\n {metas['plan'].show_saving_plan()}\n{metas['plan'].progress_test(metas['meta'].unit, metas['meta'].time, metas['meta'].money)}")
+    else:
+        print('No hay metas y planes registrados.\n')
 
 
 def ingreso_num(mensaje, tipo='int'):
