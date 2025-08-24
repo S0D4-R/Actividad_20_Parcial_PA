@@ -18,8 +18,7 @@ class Goal:
     def show_goal(self):
         return f"|Nombre: {self.name}|Tiempo: {self.time}|Dinero: {self.money}|"
     #porcentaje_avance
-    def percentage_process(self):
-        pass
+
 
 #Clase PlanAhorro------------------------------------------------------------------------------------
 class SavingPlan:
@@ -30,10 +29,14 @@ class SavingPlan:
         self.suma_d = suma_depositos
         self.interest = interes
         self.interest_type = interes_type
+    #Mostrar el avance del plan de ahorro
+    def show_saving_plan(self):
+        return f"|Periodo: {self.periodo} |suma de deposito: {self.suma_d} |Interes: {self.interest} |"
 
     #depositar
-    def deposit(self):
-        pass
+    def deposit(self,money_amount):
+        self.depositos_realizados.append(money_amount)
+        self.suma_d += money_amount
     #total_acumulado (incluye intereses)
     def total_accumulated(self):
         pass
@@ -80,7 +83,10 @@ while key:
                     if searched_id in cuentas:
                         cuentas[searched_id].deposit()
             case "3":
-                pass
+                print("-"*15 + "RESUMEN METAS Y PLANES"+ "-"*15)
+                for i, metas in enumerate(cuentas):
+                    print(f"Metas: {i}. {metas.show_goal()}\n"
+                          f"Plan de ahorro{i}. {metas.show_saving_plan()}\n")
             case "4":
                 print("Gracias por usar el programa")
                 key = False
