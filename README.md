@@ -32,7 +32,7 @@ Si el usuario no ha agregado ninguna cuenta, muestra el mensaje "No hay cuentas 
 si no, el programa pide un número de cuenta y de ahi que el usuario defina cuanto dinero quiere depositar.\
 El programa muestra mensajes de error por si el usuario se equivoca al ingresar los datos necesarios.
 
-# ------Para la opción 3 (Ver resumen de metas y planes)------
+# ----Para la opción 3 (Ver resumen de metas y planes)----
 Esta opción es para mostrar las metas y planes que previamente ha ingresado el usuario\
 Ej:'meta': Goal("Carro", "mes", 1, 150000)\
 'plan': SavingPlan("mensual", 200, 0, 0.5, 'compuesto')
