@@ -1,6 +1,6 @@
 # Parcial 1 Programación Avanzada
 ## Programa 4: Calculadora Financiera de Ahorros
-###Integrantes:
+### Integrantes:
 Javier Huertas - 1505825\
 Pedro Monroy - 1505625\
 Fabritzio López - 1507525\
@@ -27,7 +27,7 @@ El programa muestra el mensaje "Ingrese el tipo de tasa de interés:"
 El usuario define si quiere un interés simple o compuesto
 luego de que el usuario defina sus objetivos, se agregan a la lista **"Cuentas"**
 
-# ------------Para la opción 2 (Depositar):------------
+# ------------Para la opción 2 (Depositar)------------
 Si el usuario no ha agregado ninguna cuenta, muestra el mensaje "No hay cuentas registradas"
 si no, el programa pide un número de cuenta y de ahi que el usuario defina cuanto dinero quiere depositar.\
 El programa muestra mensajes de error por si el usuario se equivoca al ingresar los datos necesarios.
