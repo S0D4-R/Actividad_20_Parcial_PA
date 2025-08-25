@@ -30,7 +30,7 @@ class SavingPlan:
         self.interest_type = interes_type #-----------El tipo de interes disponibles (SIMPLE//COMPUESTO)-----------
 
     def show_saving_plan(self): #-----------Mostrar nuestro progreso del plan de ahorro-----------.
-        return f"|Periodo: {self.frecuencia.capitalize()} |Dinero Total: Q{self.saldo_total} |Tasa de interés: Q{self.interest*100:.2f} | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
+        return f"|Periodo: {self.frecuencia.capitalize()} |Dinero Total: Q{self.saldo_total} |Tasa de interés: {self.interest*100:.2f}% | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
         #Retorna nuestro progreso en nuestro plan de ahorro
 
     def deposit(self,money_amount): #-----------opción 2 (DEPOSITAR)-----------
