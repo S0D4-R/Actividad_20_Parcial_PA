@@ -36,18 +36,18 @@ class SavingPlan:
     def deposit(self,money_amount): #-----------opción 2 (DEPOSITAR)-----------
         self.depositos_realizados.append(money_amount)
         self.saldo_total += money_amount
+        self.apply_interest()
         #Agrega en "money_amount" a saldo_total (Ej.: tenemos Q300 y agregamos Q100, nuestro saldo total sería Q400
 
-    def total_accumulated(self, unidad, tiempo):#-------total_acumulado (incluye intereses)--------
+    def apply_interest(self):#-------total_acumulado (incluye intereses)--------
         if self.interest_type == "simple":
-            return self.saldo_total + (self.saldo_total * self.interest * self.depositos_esperados)
+            interes_ganado = self.depositos_realizados[0] * self.interest
+            self.saldo_total += interes_ganado
         elif self.interest_type == "compound":
-            return self.saldo_total * (1 + self.interest) ** self.depositos_esperados
-        else:
-            return self.saldo_total
+            self.saldo_total = self.saldo_total * (1 + self.interest)
 
-    def progress_test(self, unidad, tiempo, final_investment): #------------evaluar_progreso-------------
-        progress_percentage = ((self.total_accumulated(unidad, tiempo))/final_investment)*100
+    def progress_test(self, final_investment): #------------evaluar_progreso-------------
+        progress_percentage = (self.saldo_total/final_investment)*100
         if final_investment == 0:
             progress_percentage = 0
         return f"Progreso: {progress_percentage:.2f}% | Depositos: {len(self.depositos_realizados)}/{self.depositos_esperados} |"
@@ -59,8 +59,8 @@ def acc_busqueda(): #-----------Opción 3(Mostrar metas y planes de ahorro)-----
             plan = metas['plan']
             print(f'Cuenta No. {i}\n'
             f"META:\n {meta.show_goal()}\n" #EJEMPLO: |Nombre: viaje a Madrid| |Tiempo: 2 Años| |Dinero por acumular: Q100,000|
-            f"PLAN DE AHORRO:\n {plan.show_saving_plan()}\n" #EJEMPLO: |Periodo: Años| |Dinero total: Q40,987| |Tasa de interes: 0.02| |Cantidad recomendada por depósito: Q2,083.33 x mes|
-            f'PROGRESO:\n {plan.progress_test(meta.unit, meta.time, meta.money)}\n\n') #EJEMPLO: |Progreso: 40.98%| |Depositos: 20 Depositos|
+            f"PLAN DE AHORRO:\n {plan.show_saving_plan(meta.unit, meta.time)}\n" #EJEMPLO: |Periodo: Años| |Dinero total: Q40,987| |Tasa de interes: 0.02| |Cantidad recomendada por depósito: Q2,083.33 x mes|
+            f'PROGRESO:\n {plan.progress_test(meta.money)}\n\n') #EJEMPLO: |Progreso: 40.98%| |Depositos: 20 Depositos|
     else:
         print('No hay metas y planes registrados.\n')
 
