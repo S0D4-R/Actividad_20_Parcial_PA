@@ -33,24 +33,31 @@ class SavingPlan:
         return f"|Periodo: {self.frecuencia.capitalize()} |Dinero Total: Q{self.saldo_total} |Tasa de interés: {self.interest*100:.2f}% | Cantidad recomendada por deposito: Q{self.cantidad_por_deposito:.2f} |"
         #Retorna nuestro progreso en nuestro plan de ahorro
 
-    def deposit(self,money_amount): #-----------opción 2 (DEPOSITAR)-----------
+    def deposit(self,money_amount, meta): #-----------opción 2 (DEPOSITAR)-----------
         self.depositos_realizados.append(money_amount)
         self.saldo_total += money_amount
-        self.apply_interest()
-        #Agrega en "money_amount" a saldo_total (Ej.: tenemos Q300 y agregamos Q100, nuestro saldo total sería Q400
 
-    def apply_interest(self):#-------total_acumulado (incluye intereses)--------
+        if meta.unit == "meses":
+            dep_por_periodo = {"semanal": 4, "quincenal": 2, "mensual": 1}[self.frecuencia]
+        elif meta.unit == "años":
+            dep_por_periodo = {"semanal": 52, "quincenal": 24, "mensual": 12}[self.frecuencia]
+        if len(self.depositos_realizados) % dep_por_periodo == 0:
+            self.apply_interest()
+        #Agrega en "money_amount" a saldo_total (Ej.: tenemos Q300 y agregamos Q100, nuestro saldo total sería Q400
+        #Los intereses se aplican anual o mensualmente dependiendo de la unidad de tiempo elegida por el usuario.
+
+    def apply_interest(self):#-------aplicar interés (simple y compuesto)--------
         if self.interest_type == "simple":
-            interes_ganado = self.depositos_realizados[0] * self.interest
-            self.saldo_total += interes_ganado
-        elif self.interest_type == "compound":
+            interes_ganado = sum(self.depositos_realizados) * self.interest
+            self.saldo_total = sum(self.depositos_realizados) + interes_ganado
+        elif self.interest_type == "compuesto":
             self.saldo_total = self.saldo_total * (1 + self.interest)
 
     def progress_test(self, final_investment): #------------evaluar_progreso-------------
         progress_percentage = (self.saldo_total/final_investment)*100
         if final_investment == 0:
             progress_percentage = 0
-        return f"Progreso: {progress_percentage:.2f}% | Depositos: {len(self.depositos_realizados)}/{self.depositos_esperados} |"
+        return f"|Progreso: {progress_percentage:.2f}% |Depositos: {len(self.depositos_realizados)}/{self.depositos_esperados} |"
 
 def acc_busqueda(): #-----------Opción 3(Mostrar metas y planes de ahorro)-----------
     if cuentas:
@@ -59,7 +66,7 @@ def acc_busqueda(): #-----------Opción 3(Mostrar metas y planes de ahorro)-----
             plan = metas['plan']
             print(f'Cuenta No. {i}\n'
             f"META:\n {meta.show_goal()}\n" #EJEMPLO: |Nombre: viaje a Madrid| |Tiempo: 2 Años| |Dinero por acumular: Q100,000|
-            f"PLAN DE AHORRO:\n {plan.show_saving_plan(meta.unit, meta.time)}\n" #EJEMPLO: |Periodo: Años| |Dinero total: Q40,987| |Tasa de interes: 0.02| |Cantidad recomendada por depósito: Q2,083.33 x mes|
+            f"PLAN DE AHORRO:\n {plan.show_saving_plan()}\n" #EJEMPLO: |Periodo: Años| |Dinero total: Q40,987| |Tasa de interes: 0.2%| |Cantidad recomendada por depósito: Q2,083.33 x mes|
             f'PROGRESO:\n {plan.progress_test(meta.money)}\n\n') #EJEMPLO: |Progreso: 40.98%| |Depositos: 20 Depositos|
     else:
         print('No hay metas y planes registrados.\n')
@@ -151,10 +158,10 @@ while key:
 
                 monto_por_dep = cantidad / depositos_esp
 
-                print('IMPORTANTE: Las tasas de interés van de 0.1% hasta 7%.')
+                print('IMPORTANTE: Las tasas de interés van de 0.1% hasta 3%.')
                 while True:
                     t_interes = ingreso_num('Ingrese la tasa de interés: ',"float")
-                    if 0.1 <= t_interes <= 7:
+                    if 0.1 <= t_interes <= 3:
                         t_interes = t_interes / 100
                         break
                     else:
@@ -186,7 +193,7 @@ while key:
                         if 1 <= searched_id <= len(cuentas):
                             amount_to_deposit = ingreso_num("Coloque la cantidad que depositará: ", "float")
                             if amount_to_deposit > 0:
-                                cuentas[searched_id - 1]['plan'].deposit(amount_to_deposit)
+                                cuentas[searched_id - 1]['plan'].deposit(amount_to_deposit, cuentas[searched_id - 1]['meta'])
                                 print(
                                     f"!Deposito exitoso! Saldo total: Q{cuentas[searched_id - 1]["plan"].saldo_total}")
                             else:
